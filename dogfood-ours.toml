@@ -1,0 +1,33 @@
+# continuity.toml — OUR REAL LAYERS (dogfood config, 2026-09-25)
+[sessions]
+type = "sqlite"
+path = "~/.hermes/state.db"
+table = "sessions"
+time_col = "last_activity_at"
+id_col = "id"
+title_col = "title"
+messages_col = "message_count"
+source_col = "source"
+source_value = "cli"
+limit = 200
+same_sitting_minutes = 30
+same_day_hours = 6
+
+[[layers]]
+path = "/home/mr_misfit/Desktop/Sophia Life/MEMORY/working_state.md"
+root = "/home/mr_misfit/Desktop/Sophia Life"
+limit_bytes = 10240
+stale_hours = 24
+
+[[layers]]
+path = "/home/mr_misfit/Desktop/Sophia Life/MEMORY/RECENT_US.md"
+root = "/home/mr_misfit/Desktop/Sophia Life"
+stale_hours = 720
+
+[[layers]]
+path = "/home/mr_misfit/Desktop/Sophia Life/MEMORY/PROJECTS.md"
+root = "/home/mr_misfit/Desktop/Sophia Life"
+stale_hours = 720
+
+[claims]
+path = "/home/mr_misfit/Desktop/Sophia Life/MIND/provenance.jsonl"

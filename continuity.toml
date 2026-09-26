@@ -1,0 +1,38 @@
+# continuity.toml — point the checks at your own agent's records.
+# Everything here is optional. Nothing is written; every reader opens read-only.
+
+[sessions]
+type = "sqlite"                     # "sqlite" or "jsonl"
+path = "~/.hermes/state.db"         # your session store
+table = "sessions"
+time_col = "last_activity_at"
+id_col = "id"
+title_col = "title"
+messages_col = "message_count"
+limit = 200
+
+# Thresholds for the continuity-gap verdict. Minutes, then hours.
+same_sitting_minutes = 30
+same_day_hours = 6
+
+# --- if your harness appends turns to a file instead of using sqlite: ---
+# type = "jsonl"
+# path = "~/agent/sessions.jsonl"
+# ts_field = "ts"                   # epoch seconds, epoch millis, or ISO8601
+
+# Memory layers to check, each with ITS OWN declared limit.
+# `limit_bytes` is a signal to look, never an instruction to cut.
+[[layers]]
+path = "~/agent/MEMORY/working_state.md"
+limit_bytes = 10240
+stale_hours = 24
+
+[[layers]]
+path = "~/agent/MEMORY/semantic.md"
+stale_hours = 720
+
+# Optional: a JSONL store of claims, one per line, each with key / claim / tier.
+# Tiers: verified, authored, inherited, inferred, stale, retired.
+# `retired` rows are TOMBSTONES and never count as live assertions.
+[claims]
+path = "~/agent/MIND/provenance.jsonl"
